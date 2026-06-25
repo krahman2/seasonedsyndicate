@@ -44,7 +44,7 @@ const PUBLISHED_URLS = {
 
 const COL_LABELS = [
   "Item", "Brand / Code", "Buy", "Qty",
-  "Total Cost", "Sell", "Revenue",
+  "Total Buy", "Sell", "Total Sell",
   "Item Profit", "Total Profit", "Margin",
 ];
 const NUMERIC_COLS = new Set([2, 3, 4, 5, 6, 7, 8, 9]);
@@ -532,15 +532,15 @@ function App() {
               </span>
               <div className="totals-values">
                 <div className="totals-item">
-                  <span>Qty</span>
+                  <span>Total Qty</span>
                   <strong>{tableTotals.qty > 0 ? tableTotals.qty.toLocaleString() : "—"}</strong>
                 </div>
                 <div className="totals-item">
-                  <span>Total Cost</span>
+                  <span>Total Buy</span>
                   <strong>{tableTotals.totalBuy > 0 ? fmt(tableTotals.totalBuy) : "—"}</strong>
                 </div>
                 <div className="totals-item">
-                  <span>Revenue</span>
+                  <span>Total Sell</span>
                   <strong>{tableTotals.revenue > 0 ? fmt(tableTotals.revenue) : "—"}</strong>
                 </div>
                 <div className="totals-item">
