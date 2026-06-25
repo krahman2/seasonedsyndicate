@@ -747,20 +747,20 @@ td:last-child { color: #9ca3af; font-size: 0.8rem; }
 /* ── Totals card ─────────────────────────────────────────────────────────── */
 
 .totals-card {
-  background: #1c1917;
-  border: 1px solid #292524;
+  background: #fff;
+  border: 1px solid #e8e3de;
   border-radius: 20px;
   padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%), 0 2px 8px rgb(0 0 0 / 3%);
 }
 
 .totals-card-label {
   font-size: 0.63rem;
   font-weight: 700;
-  color: #57534e;
+  color: #a8a09a;
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -781,23 +781,22 @@ td:last-child { color: #9ca3af; font-size: 0.8rem; }
 .totals-item span {
   font-size: 0.62rem;
   font-weight: 700;
-  color: #57534e;
+  color: #a8a09a;
   text-transform: uppercase;
   letter-spacing: 0.09em;
 }
 
 .totals-item strong {
-  font-size: 1.05rem;
+  font-size: 1.45rem;
   font-weight: 700;
-  color: #f5f5f4;
+  color: #111827;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
-/* Color-coded totals */
-.totals-item:nth-child(3) strong { color: #fb923c; } /* Total Sell → orange */
-.totals-item:nth-child(4) strong { color: #34d399; } /* Profit → green */
-.totals-item:nth-child(5) strong { color: #60a5fa; } /* Avg Margin → blue */
+/* Match the summary card color coding */
+.totals-item:nth-child(3) strong { color: #15803d; } /* Total Sell → green */
+.totals-item:nth-child(4) strong { color: #0f766e; } /* Profit → teal */
 
 
 /* ── New item badges ─────────────────────────────────────────────────────── */
