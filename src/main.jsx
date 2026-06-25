@@ -241,12 +241,14 @@ function App() {
         setInstallState("done");
         setInstallPrompt(null);
       }
-    } else if (isIOS) {
+    } else {
+      // iOS or desktop: show the instructions tooltip
       setIosHintOpen((v) => !v);
     }
   }
 
-  const showInstallBtn = installState !== "done" && (installPrompt || isIOS);
+  // Show install button unless the app is already running as a standalone PWA
+  const showInstallBtn = installState !== "done";
 
   async function load() {
     setLoading(true);
@@ -371,10 +373,11 @@ function App() {
     <div className="app">
       <header className="topbar">
         <div className="topbar-left">
-          <span className="brand-chip">TATA</span>
           <div>
             <h1>
-              Inventory
+              {manufacturer === "all"
+                ? "Inventory"
+                : SOURCES.find((s) => s.id === manufacturer)?.label ?? "Inventory"}
               {newCount > 0 && <span className="new-count-badge">{newCount} new</span>}
             </h1>
             {lastUpdated && (
@@ -394,7 +397,10 @@ function App() {
               </button>
               {iosHintOpen && (
                 <div className="install-hint">
-                  <p>Tap <strong>Share</strong> <span className="hint-share-icon">⎋</span> at the bottom of Safari, then <strong>Add to Home Screen</strong>.</p>
+                  {isIOS
+                    ? <p>Tap <strong>Share</strong> <span className="hint-share-icon">⎋</span> at the bottom of Safari, then <strong>Add to Home Screen</strong>.</p>
+                    : <p>In Chrome, tap the <strong>⋮ menu</strong> and choose <strong>Add to Home Screen</strong> or <strong>Install app</strong>.</p>
+                  }
                 </div>
               )}
             </div>

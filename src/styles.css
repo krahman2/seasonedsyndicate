@@ -53,13 +53,12 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  /* Dark premium header */
-  background: #1c1917;
-  border: 1px solid #292524;
+  background: #fff;
+  border: 1px solid #e8e3de;
   border-radius: 22px;
   padding: 13px 16px;
   padding-top: calc(13px + env(safe-area-inset-top));
-  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%), 0 2px 8px rgb(0 0 0 / 3%);
 }
 
 .topbar-left {
@@ -69,26 +68,12 @@ select {
   min-width: 0;
 }
 
-.brand-chip {
-  display: inline-block;
-  background: #7c2d12;
-  color: #fef3c7;
-  font-size: 0.65rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  padding: 5px 11px;
-  border-radius: 8px;
-  text-transform: uppercase;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 8%) inset;
-}
-
 h1 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.2;
-  color: #f9fafb;
+  color: #111827;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -96,15 +81,15 @@ h1 {
 
 .last-updated {
   font-size: 0.7rem;
-  color: #78716c;
+  color: #a8a09a;
   margin-top: 2px;
   white-space: nowrap;
 }
 
 .btn-refresh {
-  border: 1px solid #44403c;
-  background: #292524;
-  color: #e7e5e4;
+  border: 1px solid #e8e3de;
+  background: #faf8f5;
+  color: #374151;
   font-size: 0.84rem;
   font-weight: 600;
   min-height: 44px;
@@ -121,18 +106,20 @@ h1 {
 }
 
 .btn-refresh:hover:not(:disabled) {
-  background: #3c3735;
-  border-color: #57534e;
+  background: #f0ebe5;
+  border-color: #ccc6be;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
 .btn-refresh:active:not(:disabled) {
-  background: #1c1917;
+  background: #e8e2db;
   transform: scale(0.96);
+  box-shadow: none;
 }
 
 .btn-refresh:disabled {
-  opacity: 0.35;
+  opacity: 0.45;
   cursor: default;
 }
 
@@ -152,29 +139,35 @@ h1 {
 }
 
 .btn-install {
-  border: 1px solid #7c2d12;
-  background: rgb(124 45 18 / 20%);
-  color: #fca88c;
+  border: 1.5px solid #7c2d12;
+  background: #fff;
+  color: #7c2d12;
   font-size: 0.84rem;
-  font-weight: 600;
+  font-weight: 700;
   min-height: 44px;
   padding: 0 16px;
   border-radius: 12px;
   cursor: pointer;
   white-space: nowrap;
   transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              color 160ms cubic-bezier(0.4,0,0.2,1),
               transform 120ms cubic-bezier(0.4,0,0.2,1),
               box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-install:hover {
-  background: rgb(124 45 18 / 35%);
+  background: #7c2d12;
+  color: #fff;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(124 45 18 / 22%);
 }
 
 .btn-install:active {
+  background: #6b2410;
+  color: #fff;
   transform: scale(0.96);
+  box-shadow: none;
 }
 
 /* iOS install instructions popover */
@@ -845,8 +838,8 @@ td:last-child { color: #9ca3af; font-size: 0.8rem; }
 .new-count-badge {
   display: inline-block;
   margin-left: 8px;
-  background: rgb(21 128 61 / 25%);
-  color: #4ade80;
+  background: #dcfce7;
+  color: #15803d;
   font-size: 0.63rem;
   font-weight: 700;
   letter-spacing: 0.07em;
@@ -854,7 +847,6 @@ td:last-child { color: #9ca3af; font-size: 0.8rem; }
   border-radius: 999px;
   text-transform: uppercase;
   vertical-align: middle;
-  border: 1px solid rgb(21 128 61 / 30%);
 }
 
 /* ── Source chips ────────────────────────────────────────────────────────── */
