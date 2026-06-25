@@ -451,7 +451,8 @@ function App() {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            {/* key forces re-mount (re-animation) when filters change */}
+            <tbody key={`${manufacturer}|${group}|${query}`}>
               {visible.length === 0 && !loading && (
                 <tr>
                   <td colSpan={10} className="placeholder-state">No items match your filters.</td>
@@ -461,7 +462,9 @@ function App() {
                 if (row.type === "section") {
                   return (
                     <tr key={i} className="section-row">
-                      <td colSpan={10}>{row.group || row.cells[0]}</td>
+                      <td colSpan={10}>
+                        <span className="section-label">{row.group || row.cells[0]}</span>
+                      </td>
                     </tr>
                   );
                 }

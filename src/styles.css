@@ -53,9 +53,8 @@ select {
   gap: 12px;
   background: #fff;
   border: 1px solid #e3ddd6;
-  border-radius: 16px;
+  border-radius: 22px;
   padding: 13px 16px;
-  /* Respect iOS notch at top */
   padding-top: calc(13px + env(safe-area-inset-top));
 }
 
@@ -103,24 +102,30 @@ h1 {
   color: #374151;
   font-size: 0.875rem;
   font-weight: 600;
-  /* Minimum 44px tap target */
   min-height: 44px;
-  padding: 0 16px;
-  border-radius: 10px;
+  padding: 0 18px;
+  border-radius: 14px;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 120ms ease, border-color 120ms ease;
+  transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              border-color 160ms cubic-bezier(0.4,0,0.2,1),
+              transform 120ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-refresh:hover:not(:disabled) {
   background: #faf8f5;
   border-color: #ccc6be;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  transform: translateY(-1px);
 }
 
 .btn-refresh:active:not(:disabled) {
   background: #f0ebe5;
+  transform: scale(0.96);
+  box-shadow: none;
 }
 
 .btn-refresh:disabled {
@@ -150,23 +155,30 @@ h1 {
   font-size: 0.875rem;
   font-weight: 700;
   min-height: 44px;
-  padding: 0 16px;
-  border-radius: 10px;
+  padding: 0 18px;
+  border-radius: 14px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 120ms ease, color 120ms ease;
+  transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              color 160ms cubic-bezier(0.4,0,0.2,1),
+              transform 120ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-install:hover {
   background: #7c2d12;
   color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(124 45 18 / 25%);
 }
 
 .btn-install:active {
   background: #6b2410;
   color: #fff;
   border-color: #6b2410;
+  transform: scale(0.96);
+  box-shadow: none;
 }
 
 /* iOS install instructions popover */
@@ -212,7 +224,7 @@ h1 {
   gap: 12px;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 12px 16px;
   color: #991b1b;
   font-size: 0.875rem;
@@ -230,7 +242,7 @@ h1 {
 .warn-bar {
   background: #fffbeb;
   border: 1px solid #fde68a;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 11px 16px;
   color: #92400e;
   font-size: 0.83rem;
@@ -240,7 +252,6 @@ h1 {
 
 .summary-grid {
   display: grid;
-  /* 2 columns on phone */
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
@@ -248,9 +259,15 @@ h1 {
 .summary-card {
   background: #fff;
   border: 1px solid #e3ddd6;
-  border-radius: 14px;
+  border-radius: 20px;
   padding: 16px 16px 14px;
+  animation: cardIn 360ms cubic-bezier(0.34, 1.26, 0.64, 1) both;
 }
+
+.summary-card:nth-child(1) { animation-delay: 0ms; }
+.summary-card:nth-child(2) { animation-delay: 50ms; }
+.summary-card:nth-child(3) { animation-delay: 100ms; }
+.summary-card:nth-child(4) { animation-delay: 150ms; }
 
 .summary-label {
   display: block;
@@ -278,7 +295,7 @@ h1 {
   gap: 10px;
   background: #fff;
   border: 1px solid #e3ddd6;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 12px 12px 10px;
 }
 
@@ -301,10 +318,9 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  /* 44px min touch target */
   min-height: 44px;
-  padding: 0 14px;
-  border-radius: 10px;
+  padding: 0 16px;
+  border-radius: 14px;
   border: 1px solid #e3ddd6;
   background: #faf8f5;
   color: #6b7280;
@@ -313,11 +329,24 @@ h1 {
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+  transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              border-color 160ms cubic-bezier(0.4,0,0.2,1),
+              color 160ms cubic-bezier(0.4,0,0.2,1),
+              transform 120ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
+.mfr-tab:hover:not(.active) {
+  background: #f0ebe5;
+  border-color: #ccc6be;
+  color: #374151;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
 .mfr-tab:active {
+  transform: scale(0.96);
   background: #ece8e3;
 }
 
@@ -368,14 +397,15 @@ h1 {
 .input-search {
   width: 100%;
   border: 1px solid #e3ddd6;
-  border-radius: 10px;
-  /* 16px prevents iOS auto-zoom */
+  border-radius: 14px;
   font-size: 16px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   color: #111827;
   background: #faf8f5;
   outline: none;
-  transition: border-color 120ms ease, background 120ms ease;
+  transition: border-color 200ms cubic-bezier(0.4,0,0.2,1),
+              background 200ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 200ms cubic-bezier(0.4,0,0.2,1);
   -webkit-appearance: none;
 }
 
@@ -398,7 +428,7 @@ h1 {
   height: 44px;
   border: 1px solid #e3ddd6;
   background: #faf8f5;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
   font-size: 1.3rem;
   line-height: 1;
@@ -407,11 +437,21 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 100ms ease;
+  transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              transform 120ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
+.nav-arrow:hover {
+  background: #f0ebe5;
+  border-color: #ccc6be;
+  color: #374151;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
 .nav-arrow:active {
+  transform: scale(0.9);
   background: #ece8e3;
 }
 
@@ -428,17 +468,25 @@ h1 {
   min-height: 44px;
   border: 1px solid #e3ddd6;
   background: #faf8f5;
-  border-radius: 10px;
-  padding: 10px 13px;
+  border-radius: 14px;
+  padding: 10px 14px;
   cursor: pointer;
-  transition: background 100ms ease;
+  transition: background 160ms cubic-bezier(0.4,0,0.2,1),
+              border-color 160ms cubic-bezier(0.4,0,0.2,1),
+              box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
+}
+
+.nav-label:hover {
+  background: #f0ebe5;
+  border-color: #ccc6be;
 }
 
 .nav-label:active,
 .nav-label.open {
   background: #ece8e3;
   border-color: #ccc6be;
+  box-shadow: 0 0 0 3px rgb(124 45 18 / 8%);
 }
 
 .nav-label-text {
@@ -473,49 +521,54 @@ h1 {
 /* Dropdown */
 .nav-dropdown {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
   background: #fff;
   border: 1px solid #e3ddd6;
-  border-radius: 14px;
-  box-shadow: 0 16px 48px rgb(0 0 0 / 18%);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 18%), 0 4px 16px rgb(0 0 0 / 8%);
   z-index: 200;
   max-height: 55vh;
   overflow-y: auto;
   padding: 6px;
   scrollbar-width: thin;
   scrollbar-color: #e3ddd6 transparent;
-  /* Ensure it doesn't go off-screen bottom */
-  bottom: auto;
+  animation: dropIn 180ms cubic-bezier(0.34, 1.26, 0.64, 1) both;
+  transform-origin: top center;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: scaleY(0.88) translateY(-6px); }
+  to   { opacity: 1; transform: scaleY(1) translateY(0); }
 }
 
 .nav-option {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0 14px;
   border: none;
   background: none;
-  border-radius: 9px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
   text-align: left;
   color: #374151;
-  transition: background 80ms ease;
-  display: flex;
-  align-items: center;
+  transition: background 120ms cubic-bezier(0.4,0,0.2,1),
+              color 120ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
-.nav-option:active {
-  background: #f5f2ee;
-}
+.nav-option:hover { background: #f5f2ee; color: #111827; }
+.nav-option:active { background: #ece8e3; }
 
 .nav-option.active {
   background: #7c2d12;
   color: #fff;
+  font-weight: 700;
 }
 
 /* ── Table ───────────────────────────────────────────────────────────────── */
@@ -523,13 +576,10 @@ h1 {
 .table-wrap {
   background: #fff;
   border: 1px solid #e3ddd6;
-  border-radius: 18px;
+  border-radius: 22px;
   overflow: hidden;
-  /* Horizontal scroll for wide table */
   overflow-x: auto;
-  /* Subtle right-edge fade to hint scroll */
   position: relative;
-  /* Smooth momentum scroll on iOS */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -596,11 +646,46 @@ thead th {
 
 thead th.num { text-align: right; }
 
+/* ── Row entrance animation ──────────────────────────────────────────────── */
+
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.95) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 /* Body */
 tbody tr {
   border-bottom: 1px solid #f0ece7;
-  transition: background 80ms ease;
+  transition: background 140ms cubic-bezier(0.4,0,0.2,1);
+  animation: rowIn 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
+
+/* Stagger first 20 rows */
+tbody tr:nth-child(1)  { animation-delay: 20ms; }
+tbody tr:nth-child(2)  { animation-delay: 45ms; }
+tbody tr:nth-child(3)  { animation-delay: 65ms; }
+tbody tr:nth-child(4)  { animation-delay: 85ms; }
+tbody tr:nth-child(5)  { animation-delay: 100ms; }
+tbody tr:nth-child(6)  { animation-delay: 115ms; }
+tbody tr:nth-child(7)  { animation-delay: 128ms; }
+tbody tr:nth-child(8)  { animation-delay: 140ms; }
+tbody tr:nth-child(9)  { animation-delay: 150ms; }
+tbody tr:nth-child(10) { animation-delay: 160ms; }
+tbody tr:nth-child(11) { animation-delay: 168ms; }
+tbody tr:nth-child(12) { animation-delay: 175ms; }
+tbody tr:nth-child(13) { animation-delay: 182ms; }
+tbody tr:nth-child(14) { animation-delay: 188ms; }
+tbody tr:nth-child(15) { animation-delay: 194ms; }
+tbody tr:nth-child(16) { animation-delay: 198ms; }
+tbody tr:nth-child(17) { animation-delay: 202ms; }
+tbody tr:nth-child(18) { animation-delay: 206ms; }
+tbody tr:nth-child(19) { animation-delay: 210ms; }
+tbody tr:nth-child(20) { animation-delay: 214ms; }
 
 tbody tr:last-child { border-bottom: none; }
 
@@ -634,17 +719,36 @@ td.num {
 
 td:last-child { color: #9ca3af; }
 
-/* Section separator rows */
+/* Section separator rows — floating pill style */
 .section-row td {
-  background: #f7f3ef;
-  padding: 7px 14px;
+  background: #fff;
+  /* generous top padding creates visual separation between groups */
+  padding: 24px 14px 8px;
+  border: none;
+  /* no row border */
+  border-bottom: none !important;
+  animation: none !important; /* don't animate these, only data rows */
+}
+
+/* The pill label inside */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  background: #f2ede7;
+  border: 1px solid #e3ddd6;
+  border-radius: 999px;
+  padding: 5px 16px;
   font-size: 0.65rem;
   font-weight: 900;
-  color: #b8b0a8;
+  color: #7c2d12;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border-top: 1px solid #e3ddd6;
-  border-bottom: 1px solid #e3ddd6;
+  white-space: nowrap;
+}
+
+/* First section row gets less top padding (no gap needed at top of table) */
+tbody tr.section-row:first-child td {
+  padding-top: 12px;
 }
 
 /* ── Table totals footer ─────────────────────────────────────────────────── */
