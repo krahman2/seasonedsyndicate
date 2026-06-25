@@ -338,6 +338,28 @@ function App() {
   const summary = useMemo(() => computeSummary(visibleDataRows), [visibleDataRows]);
   const tableTotals = useMemo(() => computeTableTotals(visibleDataRows), [visibleDataRows]);
 
+  // Group visible rows into sections. Empty sections are automatically dropped
+  // because we only push a group when it has at least one data row.
+  const sectionGroups = useMemo(() => {
+    if (hideSections) {
+      const flat = visible.filter((r) => r.type === "data");
+      return flat.length ? [{ label: null, rows: flat }] : [];
+    }
+    const groups = [];
+    let label = null;
+    let rows = [];
+    for (const row of visible) {
+      if (row.type === "section") {
+        if (rows.length) { groups.push({ label, rows }); rows = []; }
+        label = row.group || row.cells[0];
+      } else if (row.type === "data") {
+        rows.push(row);
+      }
+    }
+    if (rows.length) groups.push({ label, rows });
+    return groups;
+  }, [visible, hideSections]);
+
   // Per-source item counts for the manufacturer tabs
   const sourceCounts = useMemo(() => {
     const c = { all: dataRows.length };
@@ -443,91 +465,99 @@ function App() {
         </div>
       </div>
 
-      <div className="table-wrap">
-        {loading && rows.length === 0 ? (
+      {/* ── Section groups ── */}
+      {loading && rows.length === 0 ? (
+        <div className="table-wrap">
           <div className="placeholder-state">Loading sheets…</div>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                {COL_LABELS.map((label, i) => (
-                  <th key={i} className={NUMERIC_COLS.has(i) ? "num" : ""}>{label}</th>
-                ))}
-              </tr>
-            </thead>
-            {/* key forces re-mount (re-animation) when filters change */}
-            <tbody key={`${manufacturer}|${group}|${query}`}>
-              {visible.length === 0 && !loading && (
-                <tr>
-                  <td colSpan={10} className="placeholder-state">No items match your filters.</td>
-                </tr>
+        </div>
+      ) : sectionGroups.length === 0 ? (
+        <div className="table-wrap">
+          <div className="placeholder-state">No items match your filters.</div>
+        </div>
+      ) : (
+        <>
+          {sectionGroups.map((grp, gi) => (
+            <div key={`${manufacturer}|${group}|${query}|${gi}`} className="section-group">
+              {grp.label && (
+                <p className="section-group-label">{grp.label}</p>
               )}
-              {visible.map((row, i) => {
-                if (row.type === "section") {
-                  return (
-                    <tr key={i} className="section-row">
-                      <td colSpan={10}>
-                        <span className="section-label">{row.group || row.cells[0]}</span>
-                      </td>
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      {COL_LABELS.map((lbl, i) => (
+                        <th key={i} className={NUMERIC_COLS.has(i) ? "num" : ""}>{lbl}</th>
+                      ))}
                     </tr>
-                  );
-                }
-                return (
-                  <tr key={i} className={row.isNew ? "row-new" : ""}>
-                    {COL_LABELS.map((_, ci) => (
-                      <td key={ci} className={NUMERIC_COLS.has(ci) ? "num" : ""}>
-                        {ci === 0 ? (
-                          <span className="item-cell">
-                            {manufacturer === "all" && (
-                              <span className={`src-chip src-${row.source}`}>{row.source}</span>
-                            )}
-                            {row.cells[0]}
-                            {row.isNew && <span className="new-badge">New</span>}
-                            {row.aiCleanName && (
-                              <span className="clean-name-hint" title={`AI suggested: ${row.aiCleanName}`}>
-                                {row.aiCleanName}
+                  </thead>
+                  <tbody>
+                    {grp.rows.map((row, ri) => (
+                      <tr key={ri} className={row.isNew ? "row-new" : ""}>
+                        {COL_LABELS.map((_, ci) => (
+                          <td key={ci} className={NUMERIC_COLS.has(ci) ? "num" : ""}>
+                            {ci === 0 ? (
+                              <span className="item-cell">
+                                {manufacturer === "all" && (
+                                  <span className={`src-chip src-${row.source}`}>{row.source}</span>
+                                )}
+                                {row.cells[0]}
+                                {row.isNew && <span className="new-badge">New</span>}
+                                {row.aiCleanName && (
+                                  <span className="clean-name-hint" title={`AI suggested: ${row.aiCleanName}`}>
+                                    {row.aiCleanName}
+                                  </span>
+                                )}
                               </span>
+                            ) : (
+                              row.cells[ci] ?? ""
                             )}
-                          </span>
-                        ) : (
-                          row.cells[ci] ?? ""
-                        )}
-                      </td>
+                          </td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-            {visibleDataRows.length > 0 && (
-              <tfoot>
-                <tr className="totals-row">
-                  <td>
-                    <span className="totals-label">
-                      {manufacturer !== "all"
-                        ? SOURCES.find((s) => s.id === manufacturer)?.label
-                        : "All"}
-                      {group !== "all" ? ` · ${group}` : ""}
-                    </span>
-                  </td>
-                  <td />
-                  <td className="num" />
-                  <td className="num"><strong>{tableTotals.qty > 0 ? tableTotals.qty.toLocaleString() : "—"}</strong></td>
-                  <td className="num"><strong>{tableTotals.totalBuy > 0 ? fmt(tableTotals.totalBuy) : "—"}</strong></td>
-                  <td className="num" />
-                  <td className="num"><strong>{tableTotals.revenue > 0 ? fmt(tableTotals.revenue) : "—"}</strong></td>
-                  <td className="num" />
-                  <td className="num"><strong>{tableTotals.totalProfit > 0 ? fmt(tableTotals.totalProfit) : "—"}</strong></td>
-                  <td className="num">
-                    <strong>
-                      {tableTotals.avgMargin !== null ? tableTotals.avgMargin.toFixed(1) + "%" : "—"}
-                    </strong>
-                  </td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        )}
-      </div>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+
+          {/* Totals summary card */}
+          {visibleDataRows.length > 0 && (
+            <div className="totals-card">
+              <span className="totals-card-label">
+                {manufacturer !== "all"
+                  ? SOURCES.find((s) => s.id === manufacturer)?.label
+                  : "All"}
+                {group !== "all" ? ` · ${group}` : ""}
+              </span>
+              <div className="totals-values">
+                <div className="totals-item">
+                  <span>Qty</span>
+                  <strong>{tableTotals.qty > 0 ? tableTotals.qty.toLocaleString() : "—"}</strong>
+                </div>
+                <div className="totals-item">
+                  <span>Total Cost</span>
+                  <strong>{tableTotals.totalBuy > 0 ? fmt(tableTotals.totalBuy) : "—"}</strong>
+                </div>
+                <div className="totals-item">
+                  <span>Revenue</span>
+                  <strong>{tableTotals.revenue > 0 ? fmt(tableTotals.revenue) : "—"}</strong>
+                </div>
+                <div className="totals-item">
+                  <span>Profit</span>
+                  <strong>{tableTotals.totalProfit > 0 ? fmt(tableTotals.totalProfit) : "—"}</strong>
+                </div>
+                {tableTotals.avgMargin !== null && (
+                  <div className="totals-item">
+                    <span>Avg Margin</span>
+                    <strong>{tableTotals.avgMargin.toFixed(1)}%</strong>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       <footer className="footer">
         <span>

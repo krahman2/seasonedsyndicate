@@ -702,57 +702,74 @@ td.num {
 
 td:last-child { color: #9ca3af; }
 
-/* ── Section separator rows ──────────────────────────────────────────────── */
+/* ── Section groups (each category = its own card) ───────────────────────── */
 
-.section-row td {
-  background: #faf8f5;
-  /* top space creates the visible break between groups */
-  padding: 22px 14px 9px;
-  /* bold top border = the actual dividing line */
-  border-top: 2px solid #e3ddd6 !important;
-  border-bottom: 1px solid #e8e3de !important;
+.section-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: tbodyFade 180ms ease both;
 }
 
-/* No top border / less space on the very first section (top of table) */
-tbody tr.section-row:first-child td {
-  padding-top: 11px;
-  border-top: none !important;
-}
-
-/* The section name label */
-.section-label {
-  display: inline-block;
+/* The label sits in the warm background between cards */
+.section-group-label {
   font-size: 0.67rem;
   font-weight: 900;
-  color: #9c8f87;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-/* ── Table totals footer ─────────────────────────────────────────────────── */
-
-tfoot { border-top: 2px solid #e3ddd6; }
-
-.totals-row td {
-  background: #faf8f5;
-  padding: 12px 14px;
-  border-top: 2px solid #d6cfc8;
-}
-
-.totals-label {
-  font-size: 0.72rem;
-  font-weight: 800;
   color: #a8a09a;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+  letter-spacing: 0.12em;
+  padding: 0 6px;
 }
 
-.totals-row td strong {
-  font-size: 0.88rem;
+/* ── Totals card ─────────────────────────────────────────────────────────── */
+
+.totals-card {
+  background: #fff;
+  border: 1px solid #e3ddd6;
+  border-radius: 20px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.totals-card-label {
+  font-size: 0.67rem;
+  font-weight: 900;
+  color: #a8a09a;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.totals-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.totals-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 80px;
+}
+
+.totals-item span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #a8a09a;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.totals-item strong {
+  font-size: 1rem;
+  font-weight: 700;
   color: #111827;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
+
 
 /* ── New item badges ─────────────────────────────────────────────────────── */
 
