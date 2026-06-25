@@ -318,10 +318,14 @@ function App() {
 
   const isFiltering = query.trim() !== "" || group !== "all" || manufacturer !== "all";
 
+  // Sections are hidden only when a specific category or search is active.
+  // Switching manufacturer alone should still show the section dividers.
+  const hideSections = query.trim() !== "" || group !== "all";
+
   const visible = useMemo(() => {
     const search = query.trim().toLowerCase();
     return rows.filter((row) => {
-      if (row.type === "section") return !isFiltering;
+      if (row.type === "section") return !hideSections;
       const matchMfr = manufacturer === "all" || row.source === manufacturer;
       const matchGroup = group === "all" || row.group === group;
       const matchSearch = !search || row.cells.some((c) => c.toLowerCase().includes(search));

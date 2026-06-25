@@ -646,46 +646,29 @@ thead th {
 
 thead th.num { text-align: right; }
 
-/* ── Row entrance animation ──────────────────────────────────────────────── */
+/* ── Animations ──────────────────────────────────────────────────────────── */
 
-@keyframes rowIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Quick fade when the table content swaps (filter/manufacturer change) */
+@keyframes tbodyFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
+/* Summary card spring-in on first load only */
 @keyframes cardIn {
-  from { opacity: 0; transform: scale(0.95) translateY(6px); }
+  from { opacity: 0; transform: scale(0.96) translateY(5px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Body */
+tbody {
+  animation: tbodyFade 180ms ease both;
+}
+
+/* Body rows */
 tbody tr {
   border-bottom: 1px solid #f0ece7;
   transition: background 140ms cubic-bezier(0.4,0,0.2,1);
-  animation: rowIn 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
-
-/* Stagger first 20 rows */
-tbody tr:nth-child(1)  { animation-delay: 20ms; }
-tbody tr:nth-child(2)  { animation-delay: 45ms; }
-tbody tr:nth-child(3)  { animation-delay: 65ms; }
-tbody tr:nth-child(4)  { animation-delay: 85ms; }
-tbody tr:nth-child(5)  { animation-delay: 100ms; }
-tbody tr:nth-child(6)  { animation-delay: 115ms; }
-tbody tr:nth-child(7)  { animation-delay: 128ms; }
-tbody tr:nth-child(8)  { animation-delay: 140ms; }
-tbody tr:nth-child(9)  { animation-delay: 150ms; }
-tbody tr:nth-child(10) { animation-delay: 160ms; }
-tbody tr:nth-child(11) { animation-delay: 168ms; }
-tbody tr:nth-child(12) { animation-delay: 175ms; }
-tbody tr:nth-child(13) { animation-delay: 182ms; }
-tbody tr:nth-child(14) { animation-delay: 188ms; }
-tbody tr:nth-child(15) { animation-delay: 194ms; }
-tbody tr:nth-child(16) { animation-delay: 198ms; }
-tbody tr:nth-child(17) { animation-delay: 202ms; }
-tbody tr:nth-child(18) { animation-delay: 206ms; }
-tbody tr:nth-child(19) { animation-delay: 210ms; }
-tbody tr:nth-child(20) { animation-delay: 214ms; }
 
 tbody tr:last-child { border-bottom: none; }
 
@@ -719,36 +702,31 @@ td.num {
 
 td:last-child { color: #9ca3af; }
 
-/* Section separator rows — floating pill style */
+/* ── Section separator rows ──────────────────────────────────────────────── */
+
 .section-row td {
-  background: #fff;
-  /* generous top padding creates visual separation between groups */
-  padding: 24px 14px 8px;
-  border: none;
-  /* no row border */
-  border-bottom: none !important;
-  animation: none !important; /* don't animate these, only data rows */
+  background: #faf8f5;
+  /* top space creates the visible break between groups */
+  padding: 22px 14px 9px;
+  /* bold top border = the actual dividing line */
+  border-top: 2px solid #e3ddd6 !important;
+  border-bottom: 1px solid #e8e3de !important;
 }
 
-/* The pill label inside */
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  background: #f2ede7;
-  border: 1px solid #e3ddd6;
-  border-radius: 999px;
-  padding: 5px 16px;
-  font-size: 0.65rem;
-  font-weight: 900;
-  color: #7c2d12;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  white-space: nowrap;
-}
-
-/* First section row gets less top padding (no gap needed at top of table) */
+/* No top border / less space on the very first section (top of table) */
 tbody tr.section-row:first-child td {
-  padding-top: 12px;
+  padding-top: 11px;
+  border-top: none !important;
+}
+
+/* The section name label */
+.section-label {
+  display: inline-block;
+  font-size: 0.67rem;
+  font-weight: 900;
+  color: #9c8f87;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 /* ── Table totals footer ─────────────────────────────────────────────────── */
