@@ -1,8 +1,10 @@
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  background: #f2ede7;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  background: #f0ebe4;
   color: #111827;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 *,
@@ -51,11 +53,13 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #fff;
-  border: 1px solid #e3ddd6;
+  /* Dark premium header */
+  background: #1c1917;
+  border: 1px solid #292524;
   border-radius: 22px;
   padding: 13px 16px;
   padding-top: calc(13px + env(safe-area-inset-top));
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
 }
 
 .topbar-left {
@@ -68,43 +72,44 @@ select {
 .brand-chip {
   display: inline-block;
   background: #7c2d12;
-  color: #fff;
+  color: #fef3c7;
   font-size: 0.65rem;
   font-weight: 900;
-  letter-spacing: 0.14em;
-  padding: 5px 10px;
+  letter-spacing: 0.16em;
+  padding: 5px 11px;
   border-radius: 8px;
   text-transform: uppercase;
   flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 8%) inset;
 }
 
 h1 {
   font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.2;
-  color: #111827;
+  color: #f9fafb;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .last-updated {
-  font-size: 0.72rem;
-  color: #a8a09a;
+  font-size: 0.7rem;
+  color: #78716c;
   margin-top: 2px;
   white-space: nowrap;
 }
 
 .btn-refresh {
-  border: 1px solid #e3ddd6;
-  background: #fff;
-  color: #374151;
-  font-size: 0.875rem;
+  border: 1px solid #44403c;
+  background: #292524;
+  color: #e7e5e4;
+  font-size: 0.84rem;
   font-weight: 600;
   min-height: 44px;
-  padding: 0 18px;
-  border-radius: 14px;
+  padding: 0 16px;
+  border-radius: 12px;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
@@ -116,20 +121,18 @@ h1 {
 }
 
 .btn-refresh:hover:not(:disabled) {
-  background: #faf8f5;
-  border-color: #ccc6be;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  background: #3c3735;
+  border-color: #57534e;
   transform: translateY(-1px);
 }
 
 .btn-refresh:active:not(:disabled) {
-  background: #f0ebe5;
+  background: #1c1917;
   transform: scale(0.96);
-  box-shadow: none;
 }
 
 .btn-refresh:disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: default;
 }
 
@@ -149,36 +152,29 @@ h1 {
 }
 
 .btn-install {
-  border: 1.5px solid #7c2d12;
-  background: #fff;
-  color: #7c2d12;
-  font-size: 0.875rem;
-  font-weight: 700;
+  border: 1px solid #7c2d12;
+  background: rgb(124 45 18 / 20%);
+  color: #fca88c;
+  font-size: 0.84rem;
+  font-weight: 600;
   min-height: 44px;
-  padding: 0 18px;
-  border-radius: 14px;
+  padding: 0 16px;
+  border-radius: 12px;
   cursor: pointer;
   white-space: nowrap;
   transition: background 160ms cubic-bezier(0.4,0,0.2,1),
-              color 160ms cubic-bezier(0.4,0,0.2,1),
               transform 120ms cubic-bezier(0.4,0,0.2,1),
               box-shadow 160ms cubic-bezier(0.4,0,0.2,1);
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-install:hover {
-  background: #7c2d12;
-  color: #fff;
+  background: rgb(124 45 18 / 35%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgb(124 45 18 / 25%);
 }
 
 .btn-install:active {
-  background: #6b2410;
-  color: #fff;
-  border-color: #6b2410;
   transform: scale(0.96);
-  box-shadow: none;
 }
 
 /* iOS install instructions popover */
@@ -258,9 +254,10 @@ h1 {
 
 .summary-card {
   background: #fff;
-  border: 1px solid #e3ddd6;
+  border: 1px solid #e8e3de;
   border-radius: 20px;
   padding: 16px 16px 14px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%), 0 2px 8px rgb(0 0 0 / 3%);
   animation: cardIn 360ms cubic-bezier(0.34, 1.26, 0.64, 1) both;
 }
 
@@ -271,11 +268,11 @@ h1 {
 
 .summary-label {
   display: block;
-  font-size: 0.65rem;
-  font-weight: 800;
+  font-size: 0.63rem;
+  font-weight: 700;
   color: #a8a09a;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   margin-bottom: 8px;
 }
 
@@ -287,6 +284,10 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+/* Color-coded financial values */
+.summary-card:nth-child(3) .summary-value { color: #b45309; } /* Total Buy → amber */
+.summary-card:nth-child(4) .summary-value { color: #15803d; } /* Total Sell → green */
+
 /* ── Controls ────────────────────────────────────────────────────────────── */
 
 .controls {
@@ -294,9 +295,10 @@ h1 {
   flex-direction: column;
   gap: 10px;
   background: #fff;
-  border: 1px solid #e3ddd6;
+  border: 1px solid #e8e3de;
   border-radius: 20px;
   padding: 12px 12px 10px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%), 0 2px 8px rgb(0 0 0 / 3%);
 }
 
 /* ── Manufacturer tabs ───────────────────────────────────────────────────── */
@@ -575,12 +577,13 @@ h1 {
 
 .table-wrap {
   background: #fff;
-  border: 1px solid #e3ddd6;
-  border-radius: 22px;
+  border: 1px solid #e8e3de;
+  border-radius: 20px;
   overflow: hidden;
   overflow-x: auto;
   position: relative;
   -webkit-overflow-scrolling: touch;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%), 0 2px 8px rgb(0 0 0 / 3%);
 }
 
 table {
@@ -633,14 +636,14 @@ thead th {
   top: 0;
   z-index: 1;
   background: #faf8f5;
-  padding: 11px 14px;
+  padding: 10px 14px;
   text-align: left;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: #a8a09a;
-  border-bottom: 1px solid #e3ddd6;
+  color: #b5afa9;
+  border-bottom: 1px solid #eee9e3;
   white-space: nowrap;
 }
 
@@ -666,13 +669,18 @@ tbody {
 
 /* Body rows */
 tbody tr {
-  border-bottom: 1px solid #f0ece7;
+  border-bottom: 1px solid #f3ede8;
   transition: background 140ms cubic-bezier(0.4,0,0.2,1);
 }
 
+/* Subtle zebra */
+tbody tr:nth-child(even) td { background: #fdfcfb; }
+tbody tr:nth-child(even) td:first-child { background: #fdfcfb; }
+
 tbody tr:last-child { border-bottom: none; }
 
-tbody tr:hover td { background: #fdf9f5; }
+tbody tr:hover td { background: #faf5f0 !important; }
+tbody tr:hover td:first-child { background: #faf5f0 !important; }
 
 td {
   padding: 12px 14px;
@@ -689,18 +697,26 @@ td:first-child {
 
 td:nth-child(2) {
   white-space: nowrap;
-  color: #a8a09a;
-  font-size: 0.8rem;
+  color: #b5afa9;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 td.num {
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
+  font-weight: 500;
 }
 
-td:last-child { color: #9ca3af; }
+/* Revenue column (Total Sell = col 7, index 6) highlight */
+tbody td:nth-child(7) { color: #15803d; font-weight: 600; }
+
+/* Total Profit column (index 9) */
+tbody td:nth-child(9) { color: #0f766e; font-weight: 600; }
+
+td:last-child { color: #9ca3af; font-size: 0.8rem; }
 
 /* ── Section groups (each category = its own card) ───────────────────────── */
 
@@ -713,62 +729,82 @@ td:last-child { color: #9ca3af; }
 
 /* The label sits in the warm background between cards */
 .section-group-label {
-  font-size: 0.67rem;
-  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.64rem;
+  font-weight: 800;
   color: #a8a09a;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   padding: 0 6px;
 }
 
+/* Accent dot before each section label */
+.section-group-label::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c4b5a8;
+  flex-shrink: 0;
+}
+
 /* ── Totals card ─────────────────────────────────────────────────────────── */
 
 .totals-card {
-  background: #fff;
-  border: 1px solid #e3ddd6;
+  background: #1c1917;
+  border: 1px solid #292524;
   border-radius: 20px;
-  padding: 16px 18px;
+  padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
 }
 
 .totals-card-label {
-  font-size: 0.67rem;
-  font-weight: 900;
-  color: #a8a09a;
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: #57534e;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 .totals-values {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 14px 24px;
 }
 
 .totals-item {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 80px;
 }
 
 .totals-item span {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  color: #a8a09a;
+  color: #57534e;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.09em;
 }
 
 .totals-item strong {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #111827;
+  color: #f5f5f4;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
+
+/* Color-coded totals */
+.totals-item:nth-child(3) strong { color: #fb923c; } /* Total Sell → orange */
+.totals-item:nth-child(4) strong { color: #34d399; } /* Profit → green */
+.totals-item:nth-child(5) strong { color: #60a5fa; } /* Avg Margin → blue */
 
 
 /* ── New item badges ─────────────────────────────────────────────────────── */
@@ -809,15 +845,16 @@ td:last-child { color: #9ca3af; }
 .new-count-badge {
   display: inline-block;
   margin-left: 8px;
-  background: #dcfce7;
-  color: #15803d;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  background: rgb(21 128 61 / 25%);
+  color: #4ade80;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
   padding: 3px 9px;
   border-radius: 999px;
   text-transform: uppercase;
   vertical-align: middle;
+  border: 1px solid rgb(21 128 61 / 30%);
 }
 
 /* ── Source chips ────────────────────────────────────────────────────────── */
