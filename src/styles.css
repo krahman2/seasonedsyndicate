@@ -128,6 +128,81 @@ h1 {
   cursor: default;
 }
 
+/* ── Topbar action group ─────────────────────────────────────────────────── */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Install button ──────────────────────────────────────────────────────── */
+
+.install-wrap {
+  position: relative;
+}
+
+.btn-install {
+  border: 1.5px solid #7c2d12;
+  background: #fff;
+  color: #7c2d12;
+  font-size: 0.875rem;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-install:hover {
+  background: #7c2d12;
+  color: #fff;
+}
+
+.btn-install:active {
+  background: #6b2410;
+  color: #fff;
+  border-color: #6b2410;
+}
+
+/* iOS install instructions popover */
+.install-hint {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: #1f2937;
+  color: #f9fafb;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 28%);
+  z-index: 300;
+}
+
+.install-hint::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 24px;
+  width: 12px;
+  height: 12px;
+  background: #1f2937;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.hint-share-icon {
+  display: inline-block;
+  transform: rotate(180deg);
+  font-style: normal;
+}
+
 /* ── Error / warn bars ───────────────────────────────────────────────────── */
 
 .error-bar {

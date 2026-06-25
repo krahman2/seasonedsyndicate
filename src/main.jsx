@@ -193,6 +193,61 @@ function App() {
   const [group, setGroup] = useState("all");
   const [manufacturer, setManufacturer] = useState("all");
 
+  // ── PWA install prompt ─────────────────────────────────────────────────
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [installState, setInstallState] = useState("idle"); // idle | done
+  const [iosHintOpen, setIosHintOpen] = useState(false);
+  const iosHintRef = useRef(null);
+
+  const isIOS = /ipad|iphone|ipod/i.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches
+    || window.navigator.standalone === true;
+
+  useEffect(() => {
+    if (isStandalone) { setInstallState("done"); return; }
+
+    function onPrompt(e) {
+      e.preventDefault();
+      setInstallPrompt(e);
+    }
+    function onInstalled() {
+      setInstallState("done");
+      setInstallPrompt(null);
+    }
+
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    window.addEventListener("appinstalled", onInstalled);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onPrompt);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
+  }, [isStandalone]);
+
+  // Close iOS hint on outside click
+  useEffect(() => {
+    if (!iosHintOpen) return;
+    function onOut(e) {
+      if (iosHintRef.current && !iosHintRef.current.contains(e.target)) setIosHintOpen(false);
+    }
+    document.addEventListener("mousedown", onOut);
+    return () => document.removeEventListener("mousedown", onOut);
+  }, [iosHintOpen]);
+
+  async function handleInstall() {
+    if (installPrompt) {
+      installPrompt.prompt();
+      const { outcome } = await installPrompt.userChoice;
+      if (outcome === "accepted") {
+        setInstallState("done");
+        setInstallPrompt(null);
+      }
+    } else if (isIOS) {
+      setIosHintOpen((v) => !v);
+    }
+  }
+
+  const showInstallBtn = installState !== "done" && (installPrompt || isIOS);
+
   async function load() {
     setLoading(true);
     setError("");
@@ -305,9 +360,23 @@ function App() {
             )}
           </div>
         </div>
-        <button className="btn-refresh" onClick={load} disabled={loading || classifying}>
-          {loading ? "Loading…" : classifying ? "Classifying…" : "↻ Refresh"}
-        </button>
+        <div className="topbar-actions">
+          {showInstallBtn && (
+            <div className="install-wrap" ref={iosHintRef}>
+              <button className="btn-install" onClick={handleInstall} title="Add to Home Screen">
+                ↓ Install
+              </button>
+              {iosHintOpen && (
+                <div className="install-hint">
+                  <p>Tap <strong>Share</strong> <span className="hint-share-icon">⎋</span> at the bottom of Safari, then <strong>Add to Home Screen</strong>.</p>
+                </div>
+              )}
+            </div>
+          )}
+          <button className="btn-refresh" onClick={load} disabled={loading || classifying}>
+            {loading ? "Loading…" : classifying ? "Classifying…" : "↻ Refresh"}
+          </button>
+        </div>
       </header>
 
       {error && (
